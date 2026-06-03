@@ -2,7 +2,7 @@
 
 Companion data and analysis code for:
 
-> Letsinger et al. "Methods for Measuring Neural Activity During Voluntary Wheel Running." *Journal of Neuroscience Methods* (under review).
+> Letsinger et al. "Methods for Measuring Neural Activity During Voluntary Wheel Running." *Journal of Neuroscience Methods* 2026.
 
 ---
 
@@ -11,10 +11,10 @@ Companion data and analysis code for:
 | File | Description |
 |------|-------------|
 | `wheel_running_neural_activity_analysis.R` | Full analysis script reproducing all figures and statistics in the manuscript |
-| `RawFiPhaData.rds` | Complete session-level dataset exported from FiPhA (all timepoints, all sessions) |
-| `1120_RVDG_Events.rds` | FiPhA event-level export for Mouse 1 (right ventral dentate gyrus) |
-| `1123_RVDG_Events.rds` | FiPhA event-level export for Mouse 2 (right ventral dentate gyrus) |
-| `1124_RVDG_Events.rds` | FiPhA event-level export for Mouse 3 (right ventral dentate gyrus) |
+| `[RawFiPhaData.rds](https://osf.io/5jry9/files/uc4mn)` | Complete session-level dataset exported from FiPhA (all timepoints, all sessions) |
+| `[1120_RVDG_Events.rds](https://osf.io/5jry9/files/s3dhe)` | FiPhA event-level export for Mouse 1 (right ventral dentate gyrus) |
+| `[1123_RVDG_Events.rds](https://osf.io/5jry9/files/rbjxk)` | FiPhA event-level export for Mouse 2 (right ventral dentate gyrus) |
+| `[1124_RVDG_Events.rds](https://osf.io/5jry9/files/k26c4)` | FiPhA event-level export for Mouse 3 (right ventral dentate gyrus) |
 | `BORIS_annotations/` | Example annotated behavioral video and BORIS annotation file for classifier training |
 
 ---
@@ -154,3 +154,5 @@ Ayland Letsinger
 Department of Kinesiology and Health Education  
 University of Texas at Austin  
 ayland.letsinger@austin.utexas.edu
+
+Funding sources: This research was supported [in part] by the Intramural Research Program of the National Institutes of Health (NIH; Z1ES90998), a NIH Pathway to Independence Award from The National Institute of Drug Abuse (K99DA058974-01A1), and contract with Social & Scientific Systems, a DLH Holdings Corp. Company (GS-00F-173CA-75N96022F00055). The contributions of the NIH author(s) are considered Works of the United States Government. The findings and conclusions presented in this paper are those of the author(s) and do not necessarily reflect the views of the NIH or the U.S. Department of Health and Human Services.
