@@ -8,25 +8,41 @@ Companion data and analysis code for:
 
 ## Repository Contents
 
-| File | Description |
-|------|-------------|
-| `wheel_running_neural_activity_analysis.R` | Full analysis script reproducing all figures and statistics in the manuscript |
-| `[RawFiPhaData.rds](https://osf.io/5jry9/files/uc4mn)` | Complete session-level dataset exported from FiPhA (all timepoints, all sessions) |
-| `[1120_RVDG_Events.rds](https://osf.io/5jry9/files/s3dhe)` | FiPhA event-level export for Mouse 1 (right ventral dentate gyrus) |
-| `[1123_RVDG_Events.rds](https://osf.io/5jry9/files/rbjxk)` | FiPhA event-level export for Mouse 2 (right ventral dentate gyrus) |
-| `[1124_RVDG_Events.rds](https://osf.io/5jry9/files/k26c4)` | FiPhA event-level export for Mouse 3 (right ventral dentate gyrus) |
-| `BORIS_annotations/` | Example annotated behavioral video and BORIS annotation file for classifier training |
+|------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| File                                                             | Description                                                                                 |
+|------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| `wheel_running_neural_activity_analysis.R`                       | Full analysis script reproducing all figures and statistics in the manuscript               |
+| `[RawFiPhaData.rds](https://osf.io/5jry9/files/uc4mn)`           | Complete session-level dataset exported from FiPhA (all timepoints, all sessions)           |
+| `[1120_RVDG_Events.rds](https://osf.io/5jry9/files/s3dhe)`       | FiPhA event-level export for Mouse 1 (right ventral dentate gyrus)                          |
+| `[1123_RVDG_Events.rds](https://osf.io/5jry9/files/rbjxk)`       | FiPhA event-level export for Mouse 2 (right ventral dentate gyrus)                          |
+| `[1124_RVDG_Events.rds](https://osf.io/5jry9/files/k26c4)`       | FiPhA event-level export for Mouse 3 (right ventral dentate gyrus)                          |
+| `[SimBA_Training_Example.csv](https://osf.io/5jry9/files/erpbq)` | Example SimBA feature matrix with manual behavior labels (columns HN–HP) added from BORIS   |
+| `[SimBA_Training_Example.mp4](https://osf.io/5jry9/files/byc5r)` | Annotated video demonstrating behavioral definitions used to label the training data        |
+|------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
 
----
+### SimBA Training Example
+
+`SimBA_Training_Example.csv` is a SimBA-generated feature matrix with three behavior label columns appended from BORIS manual annotation:
+
+|--------------------|---------------------------------------------------|
+| Column             | Behavior                                          |
+|--------------------|---------------------------------------------------|
+| `Move_Under_Wheel` | Mouse moving underneath the wheel without running |
+| `Run_On_Wheel`     | Mouse actively running on the wheel               |
+| `Stumble_On_Wheel` | Mouse losing footing on the wheel mid-run         |
+|--------------------|---------------------------------------------------|
+
+These columns (HN–HP in the raw file) are the classification targets used to train the SimBA supervised classifier. `SimBA_Training_Example.mp4` shows the same recording session (truncated 5 min video) with behavioral events marked, illustrating how each behavior was defined and annotated. Researchers adapting this pipeline should use this file as a reference when annotating their own videos in BORIS before importing labels into SimBA.
 
 ## Pipeline Overview
 
-This repository covers the R-based analysis stage of a three-step pipeline:
+This repository covers the R-based analysis stage of a five-step pipeline:
 
-1. **DeepLabCut v3** — pose estimation of anatomical landmarks from behavioral video
-2. **SimBA v3.8** — supervised behavioral classification using pose-derived features and user-defined ROIs
-3. **FiPhA** — spectral unmixing, detrending, and event-based export of fiber photometry data
-4. **R** (this repository) — peri-event signal processing, statistics, and figure generation
+1. **DeepLabCut v3** - pose estimation of anatomical landmarks from behavioral video
+2. **BORIS** - Manual annotation of exemplar behavior to be used for training in SimBA
+4. **SimBA v3.8** - supervised behavioral classification using pose-derived features and user-defined ROIs
+5. **FiPhA** - spectral unmixing, detrending, and event-based export of fiber photometry data
+6. **R** (this repository) - peri-event signal processing, statistics, and figure generation
 
 For step-by-step documentation of each tool:
 - DeepLabCut: https://deeplabcut.github.io/DeepLabCut
@@ -36,15 +52,15 @@ For step-by-step documentation of each tool:
 
 ---
 
-## Data Structure
-
 ### Nomenclature
 
-| Term | Definition |
-|------|------------|
-| Event | A single wheel running bout plus 15 seconds before initiation and 15 seconds after termination |
-| Series | A single 60-minute recording session containing multiple running events |
-| Phase | Acquisition (week 12, first week of wheel exposure) or Maintenance (week 15, after one month of daily running) |
+|---------|----------------------------------------------------------------------------------------------------------------|
+| Term    | Definition                                                                                                     |
+|---------|----------------------------------------------------------------------------------------------------------------|
+| Event   | A single wheel running bout plus 15 seconds before initiation and 15 seconds after termination                 |
+| Series  | A single 60-minute recording session containing multiple running events                                        |
+| Phase   | Acquisition (week 12, first week of wheel exposure) or Maintenance (week 15, after one month of daily running) |
+|---------|----------------------------------------------------------------------------------------------------------------|
 
 ### FiPhA Export Format
 
@@ -63,36 +79,6 @@ Series names follow the convention `<MouseID>_<Region>_<Phase><Session>` (e.g., 
 
 ---
 
-## Software Requirements
-
-| Software | Version |
-|----------|---------|
-| R | 4.5.1 |
-| data.table | 1.17.8 |
-| ggplot2 | 4.0.2 |
-| nlme | 3.1-168 |
-| emmeans | 2.0.3 |
-| afex | 1.5-1 |
-| lme4 | 2.0-1 |
-| multcompView | 0.1-11 |
-| Hmisc | 5.2-5 |
-| MASS | 7.3-65 |
-| ggridges | 0.5.7 |
-| svglite | 2.2.2 |
-| scico | 1.5.0 |
-| cowplot | 1.2.0 |
-
-Install all required packages:
-
-```r
-install.packages(c(
-  "data.table", "ggplot2", "scico", "svglite", "ggridges",
-  "nlme", "emmeans", "Hmisc", "MASS", "multcompView",
-  "afex", "lme4", "cowplot"
-))
-```
-
----
 
 ## Usage
 
@@ -110,7 +96,7 @@ All figures and statistical outputs will save to an `Analysis/` folder created i
 
 ### Adapting to new data
 
-1. Export event-level `.rds` files from FiPhA using the same event window parameters (15 seconds before initiation, 15 seconds after termination)
+1. Export event-level `.rds` files from FiPhA using the same event window parameters (recommended 15 seconds before initiation and 15 seconds after termination)
 2. Export the complete session-level dataset from FiPhA as `RawFiPhaData.rds`
 3. Place all `.rds` files in a single directory and set `dir_path` accordingly
 4. Edit the `mouse_lookup` table at lines 38-42 to match your mouse IDs and labels:
@@ -133,18 +119,20 @@ All figures and statistical outputs will save to an `Analysis/` folder created i
 
 ## Figures Produced
 
-| Figure | Script Section |
-|--------|---------------|
-| Figure 5a | Bout length vs. median z-score correlations |
-| Figure 5b,c | Event length retention curves |
-| Figure 6 | Peri-event acetylcholine traces by phase |
-| Figure 7a | Cohen's dz threshold sensitivity analysis |
-| Figure 7b | Pooled Spearman correlations with off-wheel kinematics |
-| Supplemental Figure 3 | Event length and amplitude distributions |
-| Supplemental Figure 4 | Per-mouse peri-event traces |
-| Supplemental Figure 5 | Baseline window slope analysis |
-| Supplemental Figure 7 | RMANOVA across bin widths |
-| Supplemental Figure 8 | Acetylcholine vs. kinematic scatterplots |
+|-----------------------|---------------------------------------------------------|
+| Figure                | Script Section                                          |
+|-----------------------|---------------------------------------------------------|
+| Figure 5a             | Bout length vs. median z-score correlations             |
+| Figure 5b,c           | Event length retention curves                           |
+| Figure 6              | Peri-event acetylcholine traces by phase                |
+| Figure 7a             | Cohen's dz threshold sensitivity analysis               |
+| Figure 7b             | Pooled Spearman correlations with off-wheel kinematics  |
+| Supplemental Figure 3 | Event length and amplitude distributions                |
+| Supplemental Figure 4 | Per-mouse peri-event traces                             |
+| Supplemental Figure 5 | Baseline window slope analysis                          |
+| Supplemental Figure 7 | RMANOVA across bin widths                               |
+| Supplemental Figure 8 | Acetylcholine vs. kinematic scatterplots                |
+|-----------------------|---------------------------------------------------------|
 
 ---
 
