@@ -8,7 +8,7 @@ Companion data and analysis code for:
 
 ## Repository Contents
 
-|------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+
 | File                                                             | Description                                                                                 |
 |------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
 | `wheel_running_neural_activity_analysis.R`                       | Full analysis script reproducing all figures and statistics in the manuscript               |
@@ -18,19 +18,19 @@ Companion data and analysis code for:
 | `[1124_RVDG_Events.rds](https://osf.io/5jry9/files/k26c4)`       | FiPhA event-level export for Mouse 3 (right ventral dentate gyrus)                          |
 | `[SimBA_Training_Example.csv](https://osf.io/5jry9/files/erpbq)` | Example SimBA feature matrix with manual behavior labels (columns HN–HP) added from BORIS   |
 | `[SimBA_Training_Example.mp4](https://osf.io/5jry9/files/byc5r)` | Annotated video demonstrating behavioral definitions used to label the training data        |
-|------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+
 
 ### SimBA Training Example
 
 `SimBA_Training_Example.csv` is a SimBA-generated feature matrix with three behavior label columns appended from BORIS manual annotation:
 
-|--------------------|---------------------------------------------------|
+
 | Column             | Behavior                                          |
 |--------------------|---------------------------------------------------|
 | `Move_Under_Wheel` | Mouse moving underneath the wheel without running |
 | `Run_On_Wheel`     | Mouse actively running on the wheel               |
 | `Stumble_On_Wheel` | Mouse losing footing on the wheel mid-run         |
-|--------------------|---------------------------------------------------|
+
 
 These columns (HN–HP in the raw file) are the classification targets used to train the SimBA supervised classifier. `SimBA_Training_Example.mp4` shows the same recording session (truncated 5 min video) with behavioral events marked, illustrating how each behavior was defined and annotated. Researchers adapting this pipeline should use this file as a reference when annotating their own videos in BORIS before importing labels into SimBA.
 
@@ -54,13 +54,13 @@ For step-by-step documentation of each tool:
 
 ### Nomenclature
 
-|---------|----------------------------------------------------------------------------------------------------------------|
+
 | Term    | Definition                                                                                                     |
 |---------|----------------------------------------------------------------------------------------------------------------|
 | Event   | A single wheel running bout plus 15 seconds before initiation and 15 seconds after termination                 |
 | Series  | A single 60-minute recording session containing multiple running events                                        |
 | Phase   | Acquisition (week 12, first week of wheel exposure) or Maintenance (week 15, after one month of daily running) |
-|---------|----------------------------------------------------------------------------------------------------------------|
+
 
 ### FiPhA Export Format
 
@@ -119,7 +119,7 @@ All figures and statistical outputs will save to an `Analysis/` folder created i
 
 ## Figures Produced
 
-|-----------------------|---------------------------------------------------------|
+
 | Figure                | Script Section                                          |
 |-----------------------|---------------------------------------------------------|
 | Figure 5a             | Bout length vs. median z-score correlations             |
@@ -132,7 +132,6 @@ All figures and statistical outputs will save to an `Analysis/` folder created i
 | Supplemental Figure 5 | Baseline window slope analysis                          |
 | Supplemental Figure 7 | RMANOVA across bin widths                               |
 | Supplemental Figure 8 | Acetylcholine vs. kinematic scatterplots                |
-|-----------------------|---------------------------------------------------------|
 
 ---
 
